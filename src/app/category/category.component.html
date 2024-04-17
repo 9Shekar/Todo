@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-center">
+            <h1>TODO CATEGORIES</h1>
+            <p class="text-info">
+                Be Productive and get the work done in time! 
+            </p>
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="col">
+            <form #f="ngForm" (ngSubmit)=' f.form.valid && onSubmit(f)' class="form-inline">
+                <div class="row">
+                    <div class="col-md-10 from-group">
+                        <input type="text" placeholder="Add New Categories here" [name]="'categoryName'" class="form-control-plaintext drop-shadow" [(ngModel)]= 'categoryName' required #category = 'ngModel' [ngClass]="{'border-danger': f.submitted && category.invalid}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-todo btn-block drop-shadow">{{ dataStatus }}</button>
+
+                    </div>
+                    
+                    <div class="text-danger ml-3" *ngIf="f.submitted && category.invalid && category.errors && category.errors['required']">
+                        Category is required ..
+                      </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div class="row categories-list">
+    <div class="col-md-2" *ngFor = 'let category of categories'>
+        <div class="card drop-shadow" [style.border-left-color] = 'category.data.colorCode'>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="badge badge-primary"> CATEGORY </div>
+                    <div class="cat-tools">
+                        <small><i class="fa fa-pencil-alt text-success" (click)= 'onEdit(category.data.category, category.id)'></i></small>
+                        <small><i class="fas fa-trash text-danger" (click)= 'onDelete( category.id )'></i></small>
+                    </div>
+                </div>
+  
+                <div class="todo-content" [routerLink] = "['/todo', category.id]">
+                    <h3 [style.color] = 'category.data.colorCode'>{{ category.data.category}}</h3>
+                    <small class="text-secondary"> Add the todo's list here you should complete!</small>
+                </div>
+                <span class="badge badge-danger">{{ category.data.todoCount}} - Todos</span>
+            </div>
+        </div>
+    </div>
+  </div> 
